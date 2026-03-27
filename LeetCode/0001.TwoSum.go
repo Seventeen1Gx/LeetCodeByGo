@@ -1,79 +1,65 @@
 package LeetCode
 
-import "sort"
+import (
+	"slices"
+)
 
 // 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出[和]为目标值 target  的那[两个]整数，并返回它们的数组下标。
 // 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
 // 你可以按任意顺序返回答案。
 
-func twoSum1(nums []int, target int) []int {
+func TwoSum_1(nums []int, target int) []int {
 	// 遍历法
-	ret := make([]int, 2)
-	var length = len(nums)
-	for i := 0; i < length; i++ {
-		for j := i + 1; j < length; j++ {
-			if nums[i] + nums[j] == target {
-				ret[0] = i
-				ret[1] = j
-				break
+	n := len(nums)
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			if nums[i]+nums[j] == target {
+				return []int{i, j}
 			}
 		}
 	}
-	return ret
+
+	return []int{-1, -1}
 }
 
-type slice struct {
-	sort.IntSlice
-	idx []int
-}
+func TwoSum_2(nums []int, target int) []int {
+	// 排序后双指针法
+	n := len(nums)
 
-func (s slice) Swap(i, j int) {
-	// 覆盖从 sort.IntSlice 得到的 Swap 方法
-	s.IntSlice.Swap(i, j)
-	s.idx[i], s.idx[j] = s.idx[j], s.idx[i]
-}
-
-func twoSum2(nums []int, target int) []int {
-	// 排序法，但要保存每个元素在原数组的下标
-	var s slice
-	s.IntSlice = nums
-	var length = len(nums)
-	s.idx = make([]int, length)
-	for i := 0; i < length; i++ {
-		s.idx[i] = i
+	idx := make([]int, n)
+	for i := range idx {
+		idx[i] = i
 	}
-	sort.Sort(s)
+	slices.SortFunc(idx, func(i, j int) int { return nums[i] - nums[j] })
 
-	ret := make([]int, 2)
-	var i = 0
-	var j = length - 1
+	i := 0
+	j := n - 1
 	for i < j {
-		if s.IntSlice[i]+s.IntSlice[j] == target {
-			ret[0] = s.idx[i]
-			ret[1] = s.idx[j]
-			break
-		} else if s.IntSlice[i]+s.IntSlice[j] < target {
-			i++
-		} else {
+		a := nums[idx[i]]
+		b := nums[idx[j]]
+		if a+b == target {
+			return []int{idx[i], idx[j]} // 注意这里
+		} else if a+b > target {
 			j--
+		} else {
+			i++
 		}
 	}
-	return ret
+
+	return []int{-1, -1}
 }
 
-func twoSum3(nums []int, target int) []int {
-	// 哈希法，边存边找，因为 a + b = c，从 a 找 c - a，也可从 b 找 c - b
-	var ret = make([]int, 2)
-	var hashSet = make(map[int]int, len(nums))
-	for i, num := range nums {
-		// 先看有没有，再存，防止用到自己，比如 5 + 5 = 10
-		j, ok := hashSet[target - num]
-		if ok {
-			ret[0] = i
-			ret[1] = j
-			break
+func TwoSum_3(nums []int, target int) []int {
+	// 哈希法
+	n := len(nums)
+	hashSet := make(map[int]int, n)
+
+	for j, num := range nums {
+		if i, ok := hashSet[target-num]; ok {
+			return []int{i, j}
 		}
-		hashSet[num] = i
+		hashSet[num] = j
 	}
-	return ret
+
+	return []int{-1, -1}
 }

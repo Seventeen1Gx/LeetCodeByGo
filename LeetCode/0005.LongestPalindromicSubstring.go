@@ -5,7 +5,7 @@ package LeetCode
 // 1 <= s.length <= 1000
 // s 仅由数字和英文字母（大写和/或小写）组成
 
-func longestPalindrome1(s string) string {
+func LongestPalindrome_1(s string) string {
 	// 中心扩散法
 	var ans string
 	var n = len(s)
@@ -45,7 +45,7 @@ func longestPalindrome1(s string) string {
 	return ans
 }
 
-func LongestPalindrome2(s string) string {
+func LongestPalindrome_2(s string) string {
 	// 动态规划
 	// dp[i][j] 表示 s[i:j] 是否为回文串，i<=j
 	var n = len(s)

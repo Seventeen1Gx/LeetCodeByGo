@@ -1,7 +1,7 @@
 package LeetCode
 
 import (
-	"LeetCode/utils"
+	"LeetCodeByGo/utils"
 	"math"
 )
 
@@ -15,7 +15,7 @@ import (
 // 1 <= m + n <= 2000
 // -10^6 <= nums1[i], nums2[i] <= 10^6
 
-func findMedianSortedArrays1(nums1 []int, nums2 []int) float64 {
+func FindMedianSortedArrays_1(nums1 []int, nums2 []int) float64 {
 	m := len(nums1)
 	n := len(nums2)
 	if (m+n)%2 == 0 {
@@ -48,10 +48,11 @@ func findKthVal(nums1 []int, i int, nums2 []int, j int, k int) int {
 
 	// 取小数组开头的 k/2 个元素，若不够，则取全部元素
 	pa := utils.Min(i+k/2, m)
-	// 由 pa 计算 pb，有 [i:pa) 与 [j:pb) 元素个数为 k
+	// 由 pa 计算 pb，因为 [i:pa) 与 [j:pb) 元素个数为 k
 	pb := j + k - (pa - i)
 	if nums1[pa-1] < nums2[pb-1] {
-		// num1[pa-1] 小于合并之后的第 k 小值（反证法，令该数为第 k+1 个数，则 num2[pb-1] 为第 k+2 个数，但他们之前没这么多元素）
+		// num1[pa-1] 小于合并之后的第 k 小值
+		// 反证法，令该数为第 k+1 个数，则 num2[pb-1] 为第 k+2 个数，但他们之前没这么多元素
 		// 故排除数组 1 分界线之前的部分
 		return findKthVal(nums1, pa, nums2, j, k-pa+i)
 	} else if nums1[pa-1] > nums2[pb-1] {
@@ -72,12 +73,12 @@ func findKthVal(nums1 []int, i int, nums2 []int, j int, k int) int {
 // 又由于有边界问题，这四个数不一定存在
 // 为了统一边界问题，在 nums1 和 nums2 的首尾都插入一个元素，并保证有序性
 
-func  findMedianSortedArrays2(nums1 []int, nums2 []int) float64 {
+func FindMedianSortedArrays_2(nums1 []int, nums2 []int) float64 {
 	m := len(nums1)
 	n := len(nums2)
 	if m > n {
 		// 保证 nums1 为小数组，缩小搜索范围
-		return findMedianSortedArrays2(nums2, nums1)
+		return FindMedianSortedArrays_2(nums2, nums1)
 	}
 
 	maxNum := int(math.Pow(10, 6))
@@ -117,7 +118,7 @@ func  findMedianSortedArrays2(nums1 []int, nums2 []int) float64 {
 
 		if leftMax_1 <= rightMin_2 && leftMax_2 <= rightMin_1 {
 			// 找到满足条件的 i 了，计算中位数
-			leftMax := utils.Max(leftMax_1, leftMax_2)	// max 保证了会舍去额外添加的数，下面 min 同理
+			leftMax := utils.Max(leftMax_1, leftMax_2) // max 保证了会舍去额外添加的数，下面 min 同理
 			if (m+n)%2 == 1 {
 				return float64(leftMax)
 			} else {
