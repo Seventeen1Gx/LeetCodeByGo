@@ -1,1 +1,0 @@
-SELECT name FROM Customer WHERE referee_id IS NULL AND referee_id <> 2

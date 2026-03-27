@@ -3,9 +3,11 @@ package main
 import "LeetCodeByGo/LeetCode"
 
 func main() {
-	LeetCode.MatrixMaxScore([][]int{
-		{1, 2, 3},
-		{2, 5, 7},
-		{3, 5, 1},
-	}, []int{5, 6, 2})
+	LeetCode.TrapRain2([][]int{
+		{12, 13, 1, 12},
+		{13, 4, 13, 12},
+		{13, 8, 10, 12},
+		{12, 13, 12, 12},
+		{13, 13, 13, 13},
+	})
 }
