@@ -1,13 +1,10 @@
 package main
 
-import "LeetCodeByGo/LeetCode"
+import (
+	"LeetCodeByGo/LeetCode"
+	"LeetCodeByGo/utils"
+)
 
 func main() {
-	LeetCode.TrapRain2([][]int{
-		{12, 13, 1, 12},
-		{13, 4, 13, 12},
-		{13, 8, 10, 12},
-		{12, 13, 12, 12},
-		{13, 13, 13, 13},
-	})
+	LeetCode.InorderBinaryTree_3(utils.BuildBinaryTree([]interface{}{1, nil, 2, 3}))
 }
