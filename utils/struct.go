@@ -11,6 +11,7 @@ type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
+	Depth int
 }
 
 func BuildBinaryTree(arr []interface{}) *TreeNode {

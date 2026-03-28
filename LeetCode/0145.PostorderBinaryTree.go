@@ -55,7 +55,7 @@ func PostorderBinaryTree_3(root *utils.TreeNode) []int {
 
 		// 先左后右
 		// 右先出栈1，先进栈2
-		// 那么从栈1先出来的就是左
+		// 那么从栈2先出来的就是左
 		stack1 = append(stack1, node.Left)
 		stack1 = append(stack1, node.Right)
 	}
