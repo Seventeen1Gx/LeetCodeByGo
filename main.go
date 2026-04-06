@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	LeetCode.TwoSum_2([]int{-1,-2,-3,-4,-5}, -8)
+	LeetCode.CombinationSum([]int{2, 3, 6, 7}, 7)
 }

@@ -85,3 +85,60 @@ func LongestPalindrome_2(s string) string {
 	}
 	return ans
 }
+
+func LongestPalindrome_3(s string) string {
+	// 马拉车算法
+	n := len(s)
+	if n < 2 {
+		return s
+	}
+
+	// 构造新串，统一奇偶
+	// abc -> #a#b#c#
+	t := make([]byte, 0, 2*n+1)
+	t = append(t, '#')
+	for i := 0; i < n; i++ {
+		t = append(t, s[i])
+		t = append(t, '#')
+	}
+
+	// p[i] 表示以 i 为中心的回文半径
+	m := len(t)
+	p := make([]int, m)
+	C, R := 0, 0 // 从左往右遍历，当前得到的最右回文的中心和它的右边界
+	maxL, center := 0, 0
+
+	// 遍历新串每个位置
+	for i := 0; i < m; i++ {
+		if i < R {
+			// 已知以 C 为中心，R 为右边界的回文串
+			// mirror 是关于 C 的对称位置
+			// C-mirror = i-C 或者 C-i = mirror-C
+			mirror := 2*C - i
+			p[i] = min(R-i, p[mirror])
+		}
+
+		// 中心扩展
+		left, right := i-(p[i]+1), i+(p[i]+1)
+		for right < m && left >= 0 && t[left] == t[right] {
+			p[i]++
+			left--
+			right++
+		}
+
+		// 更新最右边界
+		if i+p[i] > R {
+			C = i
+			R = i + p[i]
+		}
+
+		if p[i] > maxL {
+			maxL = p[i]
+			center = i
+		}
+	}
+
+	// 映射回原串
+	start := (center - maxL) / 2
+	return s[start : start+maxL]
+}

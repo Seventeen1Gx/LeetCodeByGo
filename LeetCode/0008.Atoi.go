@@ -16,41 +16,65 @@ import "math"
 // 本题中的空白字符只包括空格字符 ' ' 。
 // 除前导空格或数字后的其余字符串外，请勿忽略 任何其他字符。
 
-func myAtoi(s string) int {
-	var ans int
+func MyAtoi(s string) int {
+	n := len(s)
 
 	// 忽略前导空格
 	var i int
-	for ; i < len(s) && s[i] == ' '; i++ {
+	for i < n && s[i] == ' ' {
+		i++
 	}
 
-	var unsigned bool
 	// 符号位
-	if i < len(s) && s[i] == '-' {
-		unsigned = true
-		i++
-	} else if i < len(s) && s[i] == '+' {
-		unsigned = false
-		i++
+	sign := true
+	if i < n {
+		switch s[i] {
+		case '-':
+			sign = false
+			i++
+		case '+':
+			i++
+		}
 	}
 
-	for ; i < len(s); i++ {
-		if s[i] >= '0' && s[i] <= '9' {
-			digit := int(s[i] - '0')
-			ans = ans*10 + digit
-			if unsigned && ans > -math.MinInt32 {
-				return math.MinInt32
-			}
-			if !unsigned && ans > math.MaxInt32 {
+	ans := 0
+	for i < n {
+		if s[i] < '0' || s[i] > '9' {
+			break
+		}
+		digit := int(s[i] - '0')
+		if sign {
+			if ans > math.MaxInt32/10 || (ans == math.MaxInt32/10 && digit > 7) {
 				return math.MaxInt32
 			}
 		} else {
-			break
+			if ans > math.MaxInt32/10 || (ans == math.MaxInt32/10 && digit > 8) {
+				return math.MinInt32
+			}
 		}
+		ans = ans*10 + digit
+		i++
 	}
-	if unsigned {
+	if !sign {
 		ans = -ans
 	}
 
 	return ans
 }
+
+// 这里和上一题不一样
+// 因为上一题是范围内的整数反转，末尾只可能是 2 或者 1
+// 而这里末尾是 1-9 都可能，故条件多一些
+
+// 正数未溢出时，需要这个不等式成立：
+// ans * 10 + digit <= 2147483647
+// ans * 10 + digit <= 2147483647 / 10 * 10 + 7
+// (ans - 2147483647 / 10) * 10 <= 7 - digit
+// 1. 当 ans - 2147483647 / 10 > 0 时，已知 digit > 0 故 7 - digit >= 10 恒不成立
+// 2. 当 ans - 2147483647 / 10 = 0 时，7 - digit >= 0，即 digit <= 7 时才成立
+// 3. 当 ans - 2147483647 / 10 < 0 时，左边最大才是 -10，右边最小才是 -2，故总成立
+
+// 负数未溢出，需要这个不等式成立，因为我们是按正数先计算的，最后再添加负号，故：
+// ans * 10 + digit <= 2147483648
+// ans * 10 + digit <= 2147483648/10*10+8
+// 和上面同理，只是 digit <= 7 换成了 digit <= 8

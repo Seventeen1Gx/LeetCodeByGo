@@ -26,8 +26,7 @@ func reverseKGroup(head *utils.ListNode, k int) *utils.ListNode {
 		}
 
 		if curTail == nil {
-			// 当前段不足 K 个，直接接上，不做调整
-			prevTail.Next = curHead
+			// 当前段不足 K 个，不做调整
 			break
 		}
 

@@ -14,11 +14,16 @@ func LengthOfLongestSubstring(s string) int {
 	for right < n {
 		newChar := s[right]
 		idx, ok := hashSet[newChar]
-		if ok {
-			// 遭遇重复，移动左边指针到重复元素的下一个位置
-			for ; left <= idx; left++ {
-				delete(hashSet, s[left])
+		// 遭遇重复，移动左边指针到重复元素的下一个位置
+		/*
+			if ok {
+				for ; left <= idx; left++ {
+					delete(hashSet, s[left])
+				}
 			}
+		*/
+		if ok && idx >= left {
+			left = idx + 1
 		}
 		hashSet[newChar] = right
 		right++

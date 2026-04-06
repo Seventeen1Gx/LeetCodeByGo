@@ -15,6 +15,20 @@ type TreeNode struct {
 	Depth int
 }
 
+func BuildList(arr []int) *ListNode {
+	if len(arr) == 0 {
+		return nil
+	}
+	dummyNode := &ListNode{}
+	cur := dummyNode
+	for _, v := range arr {
+		node := &ListNode{Val: v}
+		cur.Next = node
+		cur = cur.Next
+	}
+	return dummyNode.Next
+}
+
 func BuildBinaryTree(arr []interface{}) *TreeNode {
 	if len(arr) == 0 || arr[0] == nil {
 		return nil

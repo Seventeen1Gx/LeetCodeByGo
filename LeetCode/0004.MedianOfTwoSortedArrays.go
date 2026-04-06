@@ -21,10 +21,9 @@ func FindMedianSortedArrays_1(nums1 []int, nums2 []int) float64 {
 	if (m+n)%2 == 0 {
 		// 偶数长度
 		return float64(findKthVal(nums1, 0, nums2, 0, (m+n)/2+1)+findKthVal(nums1, 0, nums2, 0, (m+n)/2)) / 2.0
-	} else {
-		// 奇数长度
-		return float64(findKthVal(nums1, 0, nums2, 0, (m+n)/2+1))
 	}
+	// 奇数长度
+	return float64(findKthVal(nums1, 0, nums2, 0, (m+n)/2+1))
 }
 
 // findKthVal 寻找两排序数组 nums1[i:] 和 nums2[j:] 的第 k 个数

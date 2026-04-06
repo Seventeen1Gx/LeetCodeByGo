@@ -10,11 +10,10 @@ import "fmt"
 // Y   I   R
 // 之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："PAHNAPLSIIGYIR"。
 
-func convert1(s string, numRows int) string {
-	// 仿真法
-
-	// 先排除只有一行的
+func ZigzagConvert_1(s string, numRows int) string {
+	// 模拟法
 	if numRows == 1 {
+		// 先排除只有一行的
 		return s
 	}
 
@@ -33,22 +32,24 @@ func convert1(s string, numRows int) string {
 			curRow--
 		}
 	}
+
 	var ans string
 	for i := 0; i < numRows; i++ {
 		for j := 0; j < len(rows[i]); j++ {
 			ans += fmt.Sprintf("%c", rows[i][j])
 		}
 	}
+
 	return ans
 }
 
-func convert2(s string, numRows int) string {
+func ZigzagConvert_2(s string, numRows int) string {
 	// 规律法
-
 	if numRows == 1 {
 		return s
 	}
 
+	// 一行一行地看
 	var ans string
 	for curRow := 0; curRow < numRows; curRow++ {
 		var goDown = true

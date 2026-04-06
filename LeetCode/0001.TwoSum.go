@@ -31,7 +31,7 @@ func TwoSum_2(nums []int, target int) []int {
 	for i := range idx {
 		idx[i] = i
 	}
-	slices.SortFunc(idx, func(i, j int) int { return nums[idx[i]] - nums[idx[j]] })
+	slices.SortFunc(idx, func(i, j int) int { return nums[i] - nums[j] })
 
 	i := 0
 	j := n - 1

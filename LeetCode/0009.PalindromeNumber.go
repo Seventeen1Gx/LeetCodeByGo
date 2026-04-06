@@ -4,7 +4,7 @@ package LeetCode
 //
 // 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121 是回文，而 123 不是。
 
-func isPalindrome1(x int) bool {
+func IsPalindrome_1(x int) bool {
 	// 利用栈，比较位
 	if x < 0 {
 		return false
@@ -36,7 +36,7 @@ func isPalindrome1(x int) bool {
 	return true
 }
 
-func isPalindrome2(x int) bool {
+func isPalindrome_2(x int) bool {
 	// 直接反转一半数字进行比较
 
 	if x < 0 || (x%10 == 0 && x != 0) {
